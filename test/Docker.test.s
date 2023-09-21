@@ -8,6 +8,7 @@ if( typeof module !== 'undefined' )
   const _ = require( 'wTools' );
   _.include( 'wTesting' );
   _.include( 'wPathBasic' );
+  _.include( 'wUriBasic' );
 }
 
 const _ = _global_.wTools;
@@ -75,6 +76,10 @@ function imageBuild( test )
   var got = docker.imageBuild( a.routinePath, 'Dockerfile' );
   test.identical( got, 'imagebuild_repo:imagebuild_tag' );
 
+  test.case = 'pull an image';
+  var got = docker.imageBuild( a.routinePath, 'docker://ghcr.io/pytooling/releaser' );
+  test.identical( got, 'imagebuild_repo:imagebuild_tag' );
+
   /* - */
 
   if( !Config.debug )
@@ -89,6 +94,8 @@ function imageBuild( test )
   };
   test.shouldThrowErrorSync( () => docker.imageBuild( a.routinePath, 'wrong:image' ), onResolve );
 }
+
+imageBuild.timeOut = 60000;
 
 //
 
