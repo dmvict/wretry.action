@@ -60,4 +60,4 @@ runs:
         job_context: '${{ toJSON( job ) }}'
         matrix_context: '${{ toJSON( matrix ) }}'
         time_out: '${{ inputs.time_out }}'
-        time_out: '${{ inputs.github_token }}'
+        github_token: '${{ inputs.github_token }}'
