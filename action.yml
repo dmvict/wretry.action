@@ -59,6 +59,7 @@ runs:
         current_path: '${{ inputs.current_path }}'
         attempt_limit: '${{ inputs.attempt_limit }}'
         attempt_delay: '${{ inputs.attempt_delay }}'
+        retry_condition: '${{ inputs.retry_condition }}'
         env_context: '${{ toJSON( env ) }}'
         github_context: '${{ toJSON( github ) }}'
         job_context: '${{ toJSON( job ) }}'
