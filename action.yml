@@ -28,7 +28,7 @@ inputs:
   steps_context:
     description: Number of attempts
     required: false
-    default: '${{ toJSON( steps ) }}'
+    default: '{}'
   attempt_delay:
     description: A delay between attempts in ms
     required: false
@@ -53,8 +53,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - run: echo -en "${{ toJSON(steps)}}"
-      shell: bash
     - name: retry
       id: retry
       uses: dmvict/wretry.action@js_action
