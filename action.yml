@@ -28,6 +28,7 @@ inputs:
   steps_context:
     description: Number of attempts
     required: false
+    default: '${{ toJSON( steps ) }}'
   attempt_delay:
     description: A delay between attempts in ms
     required: false
