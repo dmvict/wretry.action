@@ -63,6 +63,7 @@ runs:
         env_context: '${{ toJSON( env ) }}'
         github_context: '${{ toJSON( github ) }}'
         job_context: '${{ toJSON( job ) }}'
+        steps_context: '${{ toJSON( steps ) }}'
         matrix_context: '${{ toJSON( matrix ) }}'
         time_out: '${{ inputs.time_out }}'
         github_token: '${{ inputs.github_token }}'
