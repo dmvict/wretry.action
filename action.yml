@@ -25,6 +25,9 @@ inputs:
     description: Number of attempts
     required: false
     default: 2
+  steps_context:
+    description: Number of attempts
+    required: false
   attempt_delay:
     description: A delay between attempts in ms
     required: false
@@ -65,7 +68,7 @@ runs:
         env_context: '${{ toJSON( env ) }}'
         github_context: '${{ toJSON( github ) }}'
         job_context: '${{ toJSON( job ) }}'
-        steps_context: '${{ toJSON( steps ) }}'
+        steps_context: '${{ inputs.steps_context }}'
         matrix_context: '${{ toJSON( matrix ) }}'
         time_out: '${{ inputs.time_out }}'
         github_token: '${{ inputs.github_token }}'
