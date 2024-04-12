@@ -49,6 +49,7 @@ outputs:
 runs:
   using: composite
   steps:
+    - run: echo -en "${{ toJSON(steps)}}"
     - name: retry
       id: retry
       uses: dmvict/wretry.action@js_action
