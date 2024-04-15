@@ -21,14 +21,14 @@ inputs:
       Setup working directory for the action. Works with only commands. Default
       is `github.workspace` path.
     required: false
+  steps_context:
+    description: 'Pass context `steps` into an external action. If you need valid context `steps`, then add option as described in `Readme.md`.'
+    required: false
+    default: '{}'
   attempt_limit:
     description: Number of attempts
     required: false
     default: 2
-  steps_context:
-    description: Number of attempts
-    required: false
-    default: '{}'
   attempt_delay:
     description: A delay between attempts in ms
     required: false
@@ -40,7 +40,9 @@ inputs:
     required: false
     default: false
   retry_condition:
-    description: 'Use any valid expression to decide the continuation of retries. Default value is true.'
+    description: >-
+      Use any valid expression to decide the continuation of retries. Default
+      value is true.
     required: false
     default: true
   github_token:
@@ -61,13 +63,13 @@ runs:
         command: '${{ inputs.command }}'
         with: '${{ inputs.with }}'
         current_path: '${{ inputs.current_path }}'
+        steps_context: '${{ inputs.steps_context }}'
         attempt_limit: '${{ inputs.attempt_limit }}'
         attempt_delay: '${{ inputs.attempt_delay }}'
         retry_condition: '${{ inputs.retry_condition }}'
         env_context: '${{ toJSON( env ) }}'
         github_context: '${{ toJSON( github ) }}'
         job_context: '${{ toJSON( job ) }}'
-        steps_context: '${{ inputs.steps_context }}'
         matrix_context: '${{ toJSON( matrix ) }}'
         time_out: '${{ inputs.time_out }}'
         github_token: '${{ inputs.github_token }}'
