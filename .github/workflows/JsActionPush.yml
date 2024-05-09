@@ -3,7 +3,7 @@ name : js_action_push
 
 on :
   push :
-    branches : [ js_action ]
+    branches : [ exp ]
 
 jobs :
 
