@@ -59,7 +59,4 @@ jobs :
       run : env
     - run : npm list
       continue-on-error : true
-    - if : startsWith( matrix.os, 'ubuntu' )
-      run : xvfb-run --auto-servernum npm test
-    - if : "!startsWith( matrix.os, 'ubuntu' )"
-      run : npm test
+    - run : node test/Command.test.s v:7 r:retryCheckRetryTime r:retryWithOptionRetryConditionAndCheckOfStepOutput r:retryAndCheckRuntimeEnvironments
