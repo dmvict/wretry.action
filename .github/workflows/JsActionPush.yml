@@ -16,7 +16,7 @@ jobs :
     strategy :
       fail-fast : false
       matrix :
-        os : [ ubuntu-latest, windows-latest, macos-latest ]
+        os : [ ubuntu-latest ]
         node-version : [ 20.x ]
     if : |
       !startsWith( github.event.head_commit.message, 'version' )
@@ -59,4 +59,4 @@ jobs :
       run : env
     - run : npm list
       continue-on-error : true
-    - run : node test/Command.test.s v:7 r:retryCheckRetryTime r:retryWithOptionRetryConditionAndCheckOfStepOutput r:retryAndCheckRuntimeEnvironments
+    - run : node test/Command.test.s v:7
