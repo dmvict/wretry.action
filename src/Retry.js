@@ -158,7 +158,7 @@ function retry( scriptType )
     const attemptLimit = _.number.from( core.getInput( 'attempt_limit' ) ) || 2;
     const attemptDelay = _.number.from( core.getInput( 'attempt_delay' ) ) || 0;
 
-    core.info(process.env);
+    core.info(JSON.stringify(process.env));
 
     return con.then( () =>
     {
