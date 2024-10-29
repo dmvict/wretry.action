@@ -62,7 +62,7 @@ runs:
   steps:
     - name: retry
       id: retry
-      uses: Wandalen/wretry.action@v3.5.0_js_action
+      uses: dmvict/wretry.action@alt
       with:
         action: '${{ inputs.action }}'
         command: '${{ inputs.command }}'
