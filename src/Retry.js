@@ -158,8 +158,7 @@ function retry( scriptType )
     const attemptLimit = _.number.from( core.getInput( 'attempt_limit' ) ) || 2;
     const attemptDelay = _.number.from( core.getInput( 'attempt_delay' ) ) || 0;
 
-    core.info(process.env.GITHUB_STATE);
-    core.info(common.evaluateExpression("github.state"));
+    core.info(process.env);
 
     return con.then( () =>
     {
