@@ -24,7 +24,7 @@ It is a cause of failed jobs. For this case, the action `wretry.action` can retr
 ## Features
 
 - Retries Github `JavaScript` actions.
-- Retries `GitHub Docker` actions utilizing a `Dockerfile` as the image source.
+- Retries `GitHub Docker` actions utilizing a `Dockerfile`'s and Docker registry image as the source.
 - Retries private actions. The option `github_token` is used for private repositories.
 - The action can be an action repository that is not published on `Marketplace`.
 - Retries shell commands. Uses default shells to run commands.
@@ -150,6 +150,29 @@ Example of condition with check of current step output:
       option1: value
       option2: value
 ```
+
+**How to use complex conditions**
+
+The library used for evaluating expressions does not account for operator precedence, which can lead to incorrect results in complex expressions where the order of operations is crucial.
+
+Example of the issue. Consider the following expression:
+```yaml
+  'main' == 'main' && 'main' != 'master'
+```
+
+Due to the library's evaluation method, this expression is interpreted as:
+```yaml
+  (('main' == 'main') && 'main') != 'master'
+```
+
+As a result, it evaluates to `false`, which is not the intended outcome.
+
+To ensure that the expression is evaluated correctly, you can use parentheses to explicitly define the order of operations. The corrected expression should be written as:
+```yaml
+  ('main' == 'main') && ('main' != 'master')
+```
+
+This adjustment clarifies the intended precedence and will yield the correct result.
 
 ### `github_token`
 

@@ -8,6 +8,7 @@ const _ = wTools;
 function retry( scriptType )
 {
   let shouldRetry = core.getInput( 'retry_condition' ) || true;
+  let isRetry = false;
   const actionName = core.getInput( 'action' );
   const command = core.getMultilineInput( 'command' );
   const preRetryCommand = core.getMultilineInput( 'pre_retry_command' );
@@ -66,13 +67,23 @@ function retry( scriptType )
 
       process.env.RETRY_ACTION = actionName;
       const token = core.getInput( 'github_token' );
-      const remoteActionPath = common.remotePathForm( actionName, token );
-      const localActionDir = _.path.nativize( _.path.join( __dirname, '../../../', remoteActionPath.repo ) );
 
+      const localIs = actionName.startsWith( './' );
+
+      let remoteActionPath = null;
+      if( !localIs )
+      remoteActionPath = common.remotePathForm( actionName, token );
+
+      const localActionDir = localIs ?
+        _.path.nativize( _.path.join( process.env.GITHUB_WORKSPACE, actionName ) ) :
+        _.path.nativize( _.path.join( __dirname, '../../../', remoteActionPath.repo ) );
+
+      if( !localIs )
       con.then( () => common.actionClone( localActionDir, remoteActionPath ) );
+
       con.then( () =>
       {
-        const actionFileDir = _.path.nativize( _.path.join( localActionDir, remoteActionPath.localVcsPath ) );
+        const actionFileDir = localIs ? localActionDir : _.path.nativize( _.path.join( localActionDir, remoteActionPath.localVcsPath ) );
         const config = common.actionConfigRead( actionFileDir );
 
         if( common.shouldExit( config, scriptType ) )
@@ -169,7 +180,7 @@ function retry( scriptType )
           if( process.env.GITHUB_OUTPUT && _.fileProvider.fileExists( process.env.GITHUB_OUTPUT ) )
           _.fileProvider.fileWrite( process.env.GITHUB_OUTPUT, '' );
 
-          if( preRetryCommand.length > 0 )
+          if( isRetry && preRetryCommand.length > 0 )
           {
             const o =
             {
@@ -231,6 +242,8 @@ function retry( scriptType )
   function onError( err )
   {
     _.error.attend( err );
+
+    isRetry = true;
 
     if( _.bool.is( shouldRetry ) )
     return shouldRetry;
